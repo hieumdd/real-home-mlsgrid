@@ -32,7 +32,7 @@ def get(resource: str):
             res = r.json()
 
             data = res["value"]
-            return data if not data else __get(client, skip + TOP)
+            return data if not data else data + __get(client, skip + TOP)
 
         with _get_client() as client:
             return __get(client)

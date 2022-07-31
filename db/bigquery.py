@@ -10,19 +10,20 @@ def get_client():
 def get_latest(table: str):
     rows = (
         get_client()
-        .query(f"SELECT MAX(ModificationTimestamp) AS incre FROM {DATASET}.{table}")
+        .query(f"SELECT MAX(ModificationTimestamp) AS incre FROM {DATASET}.p_{table}")
         .result()
     )
     _start = [row for row in rows][0]["incre"]
+    _start
     return _start
 
 
 def load(table: str, schema: list[dict]):
     def _load(rows: list[dict]) -> int:
-        return (
+        output_rows = (
             get_client().load_table_from_json(
                 rows,
-                f"{DATASET}.{table}",
+                f"{DATASET}.p_{table}",
                 job_config=bigquery.LoadJobConfig(
                     schema=schema,
                     create_disposition="CREATE_IF_NEEDED",
@@ -32,5 +33,6 @@ def load(table: str, schema: list[dict]):
             .result()
             .output_rows
         )
+        return output_rows
 
     return _load
