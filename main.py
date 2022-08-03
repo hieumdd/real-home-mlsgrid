@@ -11,7 +11,10 @@ def main(request):
     if "tasks" in data:
         response = mlsgrid_service.create_tasks_service()
     elif "table" in data:
-        response = mlsgrid_service.pipeline_service(pipelines[data["table"]])
+        response = mlsgrid_service.pipeline_service(
+            pipelines[data["table"]],
+            data.get("start"),
+        )
     else:
         raise ValueError(data)
 
