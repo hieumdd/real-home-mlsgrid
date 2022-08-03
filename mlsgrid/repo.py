@@ -18,7 +18,7 @@ def _get_client() -> httpx.Client:
 def get(resource: str):
     def _get(timeframe: datetime):
         def __get(client: httpx.Client, skip: int = 0):
-            filter_ = f"OriginatingSystemName eq 'realtrac' and ModificationTimestamp gt {timeframe.isoformat(timespec='seconds')}.000Z"
+            filter_ = f"OriginatingSystemName eq 'realtrac' and ModificationTimestamp gt {timeframe.replace(tzinfo=None).isoformat(timespec='seconds')}.000Z"
             query = {
                 "$filter": filter_,
                 "$top": TOP,

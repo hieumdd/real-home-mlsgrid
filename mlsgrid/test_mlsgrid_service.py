@@ -5,7 +5,7 @@ from mlsgrid import mlsgrid_service
 
 TIMEFRAME = [
     ("auto", None),
-    ("manual", "2022-07-30"),
+    ("manual", "2022-07-01"),
 ]
 
 @pytest.fixture(
