@@ -15,7 +15,7 @@ def _get_client() -> httpx.Client:
     )
 
 
-def get(resource: str, select: str):
+def get(resource: str, select: dict):
     def _get(timeframe: datetime):
         def __get(client: httpx.Client, skip: int = 0):
             filter_ = f"OriginatingSystemName eq 'realtrac' and ModificationTimestamp gt {timeframe.replace(tzinfo=None).isoformat(timespec='seconds')}.000Z"
@@ -23,6 +23,7 @@ def get(resource: str, select: str):
                 "$filter": filter_,
                 "$top": TOP,
                 "$skip": skip,
+                **select,
             }
             qs = "&".join(
                 [f"{k}={urllib.parse.quote_plus(str(v))}" for k, v in query.items()]

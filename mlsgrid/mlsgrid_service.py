@@ -26,7 +26,7 @@ def pipeline_service(pipeline: Pipeline, start: str) -> int:
 def create_tasks_service() -> dict[str, int]:
     return {
         "tasks": cloud_tasks.create_tasks(
-            "coffeehr",
+            "mlsgrid",
             [{"table": table} for table in pipelines.keys()],
             lambda x: x["table"],
         )
