@@ -19,7 +19,7 @@ def pipeline_service(pipeline: Pipeline, start: str) -> int:
     return compose(
         bigquery.load(pipeline.name, pipeline.schema),
         pipeline.transform,
-        get(pipeline.resource),
+        get(pipeline.resource, pipeline.select),
     )(_start)
 
 
