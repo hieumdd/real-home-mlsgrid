@@ -1,22 +1,35 @@
-from typing import Any
+from flask import Flask, Request, request
 
-from mlsgrid import mlsgrid_service
-from mlsgrid.pipeline import pipelines
+from mlsgrid.service import pipeline_service
+
+app = Flask("internal")
 
 
-def main(request):
-    data: dict[str, Any] = request.get_json()
-    print(data)
+@app.route("/sync")
+def pipeline_controller():
+    data = request.get_json()
 
-    if "tasks" in data:
-        response = mlsgrid_service.create_tasks_service()
-    elif "table" in data:
-        response = mlsgrid_service.pipeline_service(
-            pipelines[data["table"]],
-            data.get("start"),
-        )
-    else:
-        raise ValueError(data)
+    return pipeline_service(
+        data.get("start"),
+        data.get("end"),
+    )
+
+
+@app.route("/analytics")
+def analytics_controller():
+    return 200
+
+
+def main(request: Request):
+    print(request)
+
+    ctx = app.test_request_context(path=request.path, data=request.data)
+    ctx.push()
+
+    response = app.full_dispatch_request()
+
+    ctx.pop()
 
     print(response)
+
     return {"response": response}
