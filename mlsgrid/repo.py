@@ -6,36 +6,59 @@ import httpx
 
 TOP = 5000
 
+client = httpx.Client(
+    base_url="https://api.mlsgrid.com/v2",
+    headers={"Authorization": f"Bearer {os.getenv('MLSGRID_TOKEN', '')}"},
+    timeout=None,
+)
 
-def _get_client() -> httpx.Client:
-    return httpx.Client(
-        base_url="https://api.mlsgrid.com/v2",
-        headers={"Authorization": f"Bearer {os.getenv('MLSGRID_TOKEN', '')}"},
-        timeout=None,
+
+def get_property(timeframe: tuple[datetime, datetime]):
+    start, end = [
+        dt.replace(tzinfo=None).isoformat(timespec="milliseconds") + 'Z' for dt in timeframe
+    ]
+
+    filter_ = " and ".join(
+        [
+            "OriginatingSystemName eq 'realtrac'",
+            f"ModificationTimestamp ge {start}",
+            f"ModificationTimestamp le {end}",
+        ]
     )
 
+    select = ",".join(
+        [
+            "ListingId",
+            "ListingKey",
+            "ModificationTimestamp",
+            "BedroomsTotal",
+            "City",
+            "CloseDate",
+            "ClosePrice",
+            "ContingentDate",
+            "Country",
+            "ListPrice",
+            "MajorChangeTimestamp",
+            "MajorChangeType",
+            "MlsStatus",
+            "OffMarketDate",
+            "OnMarketDate",
+            "OriginalListPrice",
+            "PropertySubType",
+            "PropertyType",
+        ]
+    )
 
-def get(resource: str, select: dict):
-    def _get(timeframe: datetime):
-        def __get(client: httpx.Client, skip: int = 0):
-            filter_ = f"OriginatingSystemName eq 'realtrac' and ModificationTimestamp gt {timeframe.replace(tzinfo=None).isoformat(timespec='seconds')}.000Z"
-            query = {
-                "$filter": filter_,
-                "$top": TOP,
-                "$skip": skip,
-                **select,
-            }
-            qs = "&".join(
-                [f"{k}={urllib.parse.quote_plus(str(v))}" for k, v in query.items()]
-            )
+    def _get(skip: int = 0):
+        query = {"$filter": filter_, "$top": TOP, "$skip": skip, "$select": select}
+        qs = "&".join(
+            [f"{k}={urllib.parse.quote_plus(str(v))}" for k, v in query.items()]
+        )
 
-            r = client.get(f"{resource}?{qs}")
-            res = r.json()
+        r = client.get(f"Property?{qs}")
+        res = r.json()
 
-            data = res["value"]
-            return data if not data else data + __get(client, skip + TOP)
+        data = res["value"]
+        return data if not data else data + _get(skip + TOP)
 
-        with _get_client() as client:
-            return __get(client)
-
-    return _get
+    return _get()
