@@ -1,4 +1,4 @@
-name: CI/CD
+name: Cloud Functions
 
 on:
   push:
@@ -65,12 +65,13 @@ jobs:
           --entry-point=main
           --region=us-central1
           --timeout=530
-          --memory=256MB
+          --memory=2048MB
           --runtime=python39
           --trigger-http
           --no-user-output-enabled
           --service-account=${{ env.GCP_SA }}
           --env-vars-file=${{ env.ENV_FILE }}
+          --allow-unauthenticated
 
   clean-up:
     runs-on: ubuntu-latest
