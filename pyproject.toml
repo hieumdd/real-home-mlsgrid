@@ -10,8 +10,6 @@ google-cloud-bigquery = "^2.27.1"
 httpx = "^0.22.0"
 compose = "^1.2.8"
 google-auth = "^2.6.6"
-pytz = "^2022.1"
-google-cloud-tasks = "^2.9.0"
 Flask = "^2.2.2"
 PyPika = "^0.48.9"
 
@@ -19,7 +17,6 @@ PyPika = "^0.48.9"
 pytest = "^6.2.5"
 black = "^22.3.0"
 mypy = "^0.910"
-types-pytz = "^2021.3.8"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
