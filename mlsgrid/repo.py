@@ -45,6 +45,7 @@ def get_property(timeframe: tuple[datetime, datetime]):
             "OnMarketDate",
             "OriginalListPrice",
             "PostalCode",
+            "PreviousListPrice",
             "PropertySubType",
             "PropertyType",
         ]

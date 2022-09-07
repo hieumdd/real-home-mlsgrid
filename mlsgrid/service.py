@@ -29,6 +29,7 @@ def transform(rows: list[dict]) -> list[dict]:
             "OnMarketDate": row.get("OnMarketDate"),
             "OriginalListPrice": row.get("OriginalListPrice"),
             "PostalCode": row.get("PostalCode"),
+            "PreviousListPrice": row.get("PreviousListPrice"),
             "PropertySubType": row.get("PropertySubType"),
             "PropertyType": row.get("PropertyType"),
         }
@@ -57,6 +58,7 @@ load = bigquery.load(
         {"name": "OnMarketDate", "type": "DATE"},
         {"name": "OriginalListPrice", "type": "NUMERIC"},
         {"name": "PostalCode", "type": "STRING"},
+        {"name": "PreviousListPrice", "type": "NUMERIC"},
         {"name": "PropertySubType", "type": "STRING"},
         {"name": "PropertyType", "type": "STRING"},
     ],
