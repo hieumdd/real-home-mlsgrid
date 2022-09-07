@@ -1,0 +1,15 @@
+SELECT
+    DATE_TRUNC(CloseDate) AS start_of_month,
+    AVG(DATE_DIFF(CloseDate, OnMarketDate, DAY) + 1) as days_on_market,
+FROM
+    MLSGrid.Property
+WHERE
+    1 = 1
+    AND CloseDate BETWEEN {{ start|quote }} AND {{ end|quote }}
+    {%- if country %}
+    AND Country IN ({{ country|map("quote")|join(",") }})
+    {% endif %}
+    {%- if city %}
+    AND City IN ({{ city|map("quote")|join(",") }})
+    {% endif %}
+GROUP BY DATE_TRUNC(CloseDate)
