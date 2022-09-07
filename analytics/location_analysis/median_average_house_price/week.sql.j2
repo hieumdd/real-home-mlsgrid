@@ -1,0 +1,17 @@
+SELECT
+    DATE_TRUNC(CloseDate, WEEK) AS start_of_week,
+    AVG(ClosePrice) AS avg_close_price,
+    AVG(PERCENTILE_CONT(ClosePrice, 0.5) OVER (PARTITION BY CloseDate)) AS median_close_price
+FROM
+    MLSGrid.Property
+WHERE
+    1 = 1
+    AND MlsStatus = 'Closed'
+    AND CloseDate BETWEEN {{ start|quote }} AND {{ end|quote }}
+    {%- if country %}
+    AND Country IN ({{ country|map("quote")|join(",") }})
+    {% endif %}
+    {%- if city %}
+    AND City IN ({{ city|map("quote")|join(",") }})
+    {% endif %}
+GROUP BY DATE_TRUNC(CloseDate, WEEK)

@@ -1,0 +1,22 @@
+SELECT
+    OnMarketDate AS date,
+    PropertySubType AS property_sub_type,
+    COUNT(ListingId ) as count_units,
+FROM
+    MLSGrid.Property
+WHERE
+    1 = 1
+    AND OnMarketDate <= {{ end|quote }}
+    AND (
+        OffMarketDate >= {{ start|quote }}
+        OR ContingentDate >= {{ start|quote }}
+    )
+    {%- if country %}
+    AND Country IN ({{ country|map("quote")|join(",") }})
+    {% endif %}
+    {%- if city %}
+    AND City IN ({{ city|map("quote")|join(",") }})
+    {% endif %}
+GROUP BY
+    OnMarketDate,
+    PropertySubType

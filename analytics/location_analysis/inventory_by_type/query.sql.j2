@@ -1,0 +1,26 @@
+SELECT
+    PostalCode as postal_code,
+    COUNT(ListingId) as count_units,
+FROM
+    MLSGrid.Property
+WHERE
+    1 = 1
+    AND MlsStatus IN (
+        'Active',
+        'Coming Soon / Hold',
+        'Under Contract - Showing',
+        'Under Contract - Not Showing',
+        'Closed'
+    )
+    AND OnMarketDate <= {{ end|quote }}
+    AND (
+        OffMarketDate >= {{ start|quote }}
+        OR ContingentDate >= {{ start|quote }}
+    )
+    {%- if country %}
+    AND Country IN ({{ country|map("quote")|join(",") }})
+    {% endif %}
+    {%- if city %}
+    AND City IN ({{ city|map("quote")|join(",") }})
+    {% endif %}
+GROUP BY PostalCode

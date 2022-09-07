@@ -1,0 +1,21 @@
+SELECT
+    DATE_TRUNC(CloseDate, MONTH) AS start_of_month,
+    AVG(
+        SAFE_DIVIDE(
+            PERCENTILE_CONT(ClosePrice , 0.5) OVER (PARTITION BY CloseDate),
+            PERCENTILE_CONT(OriginalListPrice , 0.5) OVER (PARTITION BY CloseDate)
+        )
+    ) AS sales_original_ratio
+FROM
+    MLSGrid.Property
+WHERE
+    1 = 1
+    AND MlsStatus = 'Closed'
+    AND CloseDate BETWEEN {{ start|quote }} AND {{ end|quote }}
+    {%- if country %}
+    AND Country IN ({{ country|map("quote")|join(",") }})
+    {% endif %}
+    {%- if city %}
+    AND City IN ({{ city|map("quote")|join(",") }})
+    {% endif %}
+GROUP BY DATE_TRUNC(CloseDate, MONTH)
