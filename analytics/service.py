@@ -1,6 +1,5 @@
 from typing import Optional
 
-from flask import Request
 from jinja2 import Template
 
 from db import bigquery
@@ -10,9 +9,7 @@ def parse_array(value: Optional[str]) -> list[str]:
     return value.split(",") if value else []
 
 
-def analytics_service(request: Request, template: Template):
-    args = request.args
-
+def analytics_service(args: dict, template: Template):
     options = {
         "level": args.get("level"),
         "by": args.get("by"),
