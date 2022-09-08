@@ -19,15 +19,10 @@ from analytics.template import routes
             "city": ["City"],
             "start": "2022-01-01",
             "end": "2022-01-01",
-        }
+        },
     ],
 )
-@pytest.mark.parametrize(
-    "template",
-    routes.values(),
-    ids=routes.keys()
-
-)
+@pytest.mark.parametrize("template", routes.values(), ids=routes.keys())
 def test_template_render(options, template):
     res = template.render(options)
     print(res)

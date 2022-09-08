@@ -1,4 +1,15 @@
-from analytics.template.template_service import template_env
+from pathlib import Path
+
+from jinja2 import Environment, FileSystemLoader
+
+template_root_path = Path(__file__).parent
+template_env = Environment(
+    loader=FileSystemLoader(template_root_path),
+    lstrip_blocks=True,
+    trim_blocks=True,
+)
+template_env.filters["quote"] = lambda x: f"'{x}'"
+
 
 location_routes, supply_demand_routes, price_reduction_routes = [
     {path: template_env.get_template(f"{page}/{path}.sql.j2") for path in templates}
