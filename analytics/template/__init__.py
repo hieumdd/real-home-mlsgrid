@@ -1,7 +1,7 @@
-from analytics.template_service import template_env
+from analytics.template.template_service import template_env
 
 location_routes, supply_demand_routes, price_reduction_routes = [
-    {path: template_env.get_template(f"{page}/{path}") for path in templates}
+    {path: template_env.get_template(f"{page}/{path}.sql.j2") for path in templates}
     for page, templates in [
         (
             "location",

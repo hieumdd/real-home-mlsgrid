@@ -1,21 +1,23 @@
 {%- macro geo(country, city) -%}
-    {%- if country -%}
+    {%- if country and city -%}
+    (
+        Country IN ({{ country|map("quote")|join(",") }})
+        AND City IN ({{ city|map("quote")|join(",") }})
+    )
+    {%- elif country -%}
     Country IN ({{ country|map("quote")|join(",") }})
-    {%- else -%}
-    1 = 1
-    {%- endif -%}
-    {%- if city -%}
+    {%- elif city -%}
     City IN ({{ city|map("quote")|join(",") }})
     {%- else -%}
     1 = 1
     {%- endif -%}
 {%- endmacro -%}
 
-{%- macro mls_status_closed -%}
+{%- macro mls_status_closed() -%}
     MlsStatus = 'Closed'
 {%- endmacro -%}
 
-{%- macro mls_status_active -%}
+{%- macro mls_status_active() -%}
     MlsStatus in ('Active', 'Coming Soon / Hold', 'Under Contract - Showing', 'Under Contract - Not Showing', 'Closed')
 {%- endmacro -%}
 

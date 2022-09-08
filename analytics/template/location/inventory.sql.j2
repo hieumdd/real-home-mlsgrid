@@ -1,6 +1,6 @@
-{%- import 'dimensions.macro.sql.j2' as dimensions %}
-{%- import 'groupbys.macro.sql.j2' as groupbys %}
-{%- import 'filters.macro.sql.j2' as filters %}
+{%- import 'macro/dimensions.sql.j2' as dimensions %}
+{%- import 'macro/groupbys.sql.j2' as groupbys %}
+{%- import 'macro/filters.sql.j2' as filters %}
 
 SELECT
     {{ dimensions.breakdown(by) }}
