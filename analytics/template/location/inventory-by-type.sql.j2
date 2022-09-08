@@ -13,4 +13,4 @@ WHERE
     AND {{ filters.geo(country, city) }}
 GROUP BY
     {{ groupbys.date('DATE(MajorChangeTimeStamp)', level) }}
-    PropertySubType
+    ,PropertySubType
