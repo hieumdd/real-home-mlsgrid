@@ -3,7 +3,7 @@
 {%- import 'macro/filters.sql.j2' as filters %}
 
 SELECT
-    {{ dimensions.date('DATE(MajorChangeTimeStamp)', level) }}
+    {{ dimensions.date('DATE(MajorChangeTimeStamp)', level) }} AS date,
     {{ dimensions.breakdown(by) }}
     COUNT(ListingId) AS count_units,
     AVG(DATE_DIFF(DATE(MajorChangeTimeStamp), OnMarketDate, day) + 1) AS avg_time_to_discount_in_days,
@@ -16,5 +16,7 @@ WHERE
     AND {{ filters.market_date(start, end) }}
     AND {{ filters.geo(country, city) }}
 GROUP BY
-    {{ groupbys.date('DATE(MajorChangeTimeStamp)', level) }}
-    {{ groupbys.breakdown(by) }}
+    {{ dimensions.date('DATE(MajorChangeTimeStamp)', level) }}
+    {%- if by -%}
+    ,{{ groupbys.breakdown(by) }}
+    {%- endif -%}

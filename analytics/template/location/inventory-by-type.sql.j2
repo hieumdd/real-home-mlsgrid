@@ -1,9 +1,8 @@
 {%- import 'macro/dimensions.sql.j2' as dimensions %}
-{%- import 'macro/groupbys.sql.j2' as groupbys %}
 {%- import 'macro/filters.sql.j2' as filters %}
 
 SELECT
-    {{ dimensions.date('OnMarketDate', level) }}
+    {{ dimensions.date('OnMarketDate', level) }} AS date,
     PropertySubType AS property_sub_type,
     COUNT(ListingId ) as count_units,
 FROM
@@ -12,5 +11,5 @@ WHERE
     {{ filters.market_date(start, end) }}
     AND {{ filters.geo(country, city) }}
 GROUP BY
-    {{ groupbys.date('DATE(MajorChangeTimeStamp)', level) }}
+    {{ dimensions.date('OnMarketDate', level) }}
     ,PropertySubType

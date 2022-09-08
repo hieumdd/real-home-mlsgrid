@@ -1,10 +1,10 @@
 {%- macro date(column, level) -%}
     {%- if level == 'month' -%}
-    DATE_TRUNC({{ column }}, MONTH) AS start_of_month,
+    DATE_TRUNC({{ column }}, MONTH)
     {%- elif level == 'week' -%}
-    DATE_TRUNC({{ column }}, WEEK) AS start_of_week,
+    DATE_TRUNC({{ column }}, WEEK)
     {%- else -%}
-    {{ column }} AS date,
+    {{ column }}
     {%- endif -%}
 {%- endmacro -%}
 
