@@ -2,7 +2,7 @@ from flask import Flask, Request, request
 
 from mlsgrid.service import pipeline_service
 from analytics.service import analytics_service
-from analytics.routes import routes as analytics_routes
+from analytics.template import routes as analytics_routes
 
 app = Flask(__name__)
 
@@ -18,26 +18,22 @@ def pipeline_controller():
     return {"result": output_rows}
 
 
-@app.route("/analytics/<route>")
-def analytics_controller(route):
-    data = request.get_json()
-
-    if not data or route not in analytics_routes:
-        return ({"error": "Bad request"}, 400)
-
-    return analytics_service(analytics_routes[route], request)
+@app.route("/analytics/<page>/<route>")
+def analytics_controller(page, route):
+    return analytics_service(request.args, analytics_routes[page][route])
 
 
 def main(request: Request):
     print(request)
 
-    ctx = app.test_request_context(path=request.path, data=request.data)
-    ctx.push()
-
+    internal_ctx = app.test_request_context(
+        path=request.full_path,
+        method=request.method,
+    )
+    internal_ctx.request = request
+    internal_ctx.push()
     response = app.full_dispatch_request()
-
-    ctx.pop()
+    internal_ctx.pop()
 
     print(response)
-
     return response
