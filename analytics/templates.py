@@ -7,8 +7,21 @@ from analytics.repo.common import QueryOptions
 
 
 template_root_path = Path(__file__).parent
-template_env = Environment(loader=FileSystemLoader(template_root_path))
+template_env = Environment(
+    loader=FileSystemLoader(template_root_path),
+    lstrip_blocks=True,
+    trim_blocks=True,
+)
 template_env.filters["quote"] = lambda x: f"'{x}'"
+
+
+def query(template_path: str):
+    def _query(options: QueryOptions):
+        template = template_env.get_template(template_path)
+
+        return template.render(options)
+
+    return _query
 
 
 def multi_level_query(page_name: str, chart_name: str):
