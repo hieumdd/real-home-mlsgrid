@@ -22,7 +22,11 @@ from analytics.template import routes
         },
     ],
 )
-@pytest.mark.parametrize("template", routes.values(), ids=routes.keys())
+@pytest.mark.parametrize(
+    "template",
+    [i for j in [x.values() for x in routes.values()] for i in j],
+    ids=[i for j in [x.keys() for x in routes.values()] for i in j],
+)
 def test_template_render(options, template):
     res = template.render(options)
     print(res)

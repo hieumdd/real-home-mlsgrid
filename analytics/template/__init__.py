@@ -11,8 +11,10 @@ template_env = Environment(
 template_env.filters["quote"] = lambda x: f"'{x}'"
 
 
-location_routes, supply_demand_routes, price_reduction_routes = [
-    {path: template_env.get_template(f"{page}/{path}.sql.j2") for path in templates}
+routes = {
+    page: {
+        path: template_env.get_template(f"{page}/{path}.sql.j2") for path in templates
+    }
     for page, templates in [
         (
             "location",
@@ -37,6 +39,4 @@ location_routes, supply_demand_routes, price_reduction_routes = [
             ],
         ),
     ]
-]
-
-routes = location_routes | supply_demand_routes | price_reduction_routes
+}
