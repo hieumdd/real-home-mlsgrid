@@ -7,7 +7,6 @@ SELECT
         FROM
             MLSGrid.Property
         WHERE
-            1 = 1
             {{ filters.close_date(start, end) }}
     ) AS total_sales_volume,
     (
@@ -16,9 +15,8 @@ SELECT
         FROM
             MLSGrid.Property
         WHERE
-            1 = 1
-            AND PropertyType = 'Residential'
-            {{ filters.close_date(start, end) }}
+            PropertyType = 'Residential'
+            AND {{ filters.close_date(start, end) }}
     ) AS residential_sales_volume,
     (
         SELECT
@@ -26,9 +24,8 @@ SELECT
         FROM
             MLSGrid.Property
         WHERE
-            1 = 1
-            AND PropertyType = 'Condo'
-            {{ filters.close_date(start, end) }}
+            PropertyType = 'Condo'
+            AND {{ filters.close_date(start, end) }}
     ) AS condo_sales_volume,
     (
         SELECT
@@ -36,7 +33,6 @@ SELECT
         FROM
             MLSGrid.Property
         WHERE
-            1 = 1
             {{ filters.close_date(start, end) }}
     ) AS avg_close_price,
     (
@@ -45,7 +41,6 @@ SELECT
         FROM
             MLSGrid.Property
         WHERE
-            1 = 1
             {{ filters.close_date(start, end) }}
     ) AS avg_list_price,
     (
@@ -54,9 +49,8 @@ SELECT
         FROM
             MLSGrid.Property
         WHERE
-            1 = 1
-            AND MlsStatus in ('Closed')
-            {{ filters.close_date(start, end) }}
+            MlsStatus in ('Closed')
+            AND {{ filters.close_date(start, end) }}
     ) AS avg_days_to_close,
     (
         SELECT
@@ -64,9 +58,8 @@ SELECT
         FROM
             MLSGrid.Property
         WHERE
-            1 = 1
-            AND MlsStatus in ('Active')
-            {{ filters.market_date(start, end) }}
+            MlsStatus in ('Active')
+            AND {{ filters.market_date(start, end) }}
 
     ) AS avg_days_to_market,
     (
@@ -75,10 +68,6 @@ SELECT
         FROM
             MLSGrid.Property
         WHERE
-            1 = 1
-            AND MlsStatus in (
-                'Active',
-                'Coming Soon / Hold'
-            )
-            {{ filters.market_date(start, end) }}
+            MlsStatus in ('Active', 'Coming Soon / Hold')
+            AND {{ filters.market_date(start, end) }}
     ) AS current_inventory,

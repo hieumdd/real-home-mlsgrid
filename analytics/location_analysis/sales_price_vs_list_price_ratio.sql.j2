@@ -15,10 +15,9 @@ SELECT
 FROM
     MLSGrid.Property
 WHERE
-    1 = 1
     {{ filters.mls_status_closed() }}
-    {{ filters.close_date(start, end) }}
-    {{ filters.geo(country, city) }}
+    AND {{ filters.close_date(start, end) }}
+    AND {{ filters.geo(country, city) }}
 GROUP BY
     {{ groupbys.date('CloseDate', level) }}
 
