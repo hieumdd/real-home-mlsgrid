@@ -1,0 +1,17 @@
+{%- import 'macro/dimensions.sql.j2' as dimensions %}
+{%- import 'macro/groupbys.sql.j2' as groupbys %}
+{%- import 'macro/filters.sql.j2' as filters %}
+
+SELECT
+    {{ dimensions.date('CloseDate', level) }}
+    AVG(ClosePrice) AS avg_close_price,
+    AVG(PERCENTILE_CONT(ClosePrice, 0.5) OVER (PARTITION BY CloseDate)) AS median_close_price
+FROM
+    MLSGrid.Property
+WHERE
+    {{ filters.mls_status_closed() }}
+    AND {{ filters.close_date(start, end) }}
+    AND {{ filters.geo(country, city) }}
+GROUP BY
+    {{ groupbys.date('CloseDate', level) }}
+

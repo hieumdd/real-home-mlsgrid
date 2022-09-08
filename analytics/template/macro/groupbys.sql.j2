@@ -1,0 +1,20 @@
+{%- macro date(column, level) -%}
+    {%- if level == 'month' -%}
+    DATE_TRUNC({{ column }}, MONTH)
+    {%- elif level == 'week' -%}
+    DATE_TRUNC({{ column }}, WEEK)
+    {%- else -%}
+    {{ column }} AS date
+    {%- endif -%}
+{%- endmacro -%}
+
+
+{%- macro breakdown(by) -%}
+    {%- if by == 'bedrooms_total' -%}
+    ,BedroomsTotal
+    {%- elif by == 'type' -%}
+    ,PropertySubType,
+    {%- elif by == 'postal_code' -%}
+    ,PostalCode
+    {%- endif -%}
+{%- endmacro %}
