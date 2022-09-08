@@ -13,13 +13,7 @@ FROM
 WHERE
     1 = 1
     AND MajorChangeType = 'Price Change'
-    AND MlsStatus in (
-        'Active',
-        'Coming Soon / Hold', 
-        'Under Contract - Showing',
-        'Under Contract - Not Showing',
-        'Closed'
-    )
+    {{ filters.mls_status_active() }}
     {{ filters.market_date(start, end) }}
     {{ filters.geo(country, city) }}
 GROUP BY
