@@ -7,7 +7,7 @@ from analytics.template import routes as analytics_routes
 app = Flask(__name__)
 
 
-@app.route("/sync")
+@app.post("/sync")
 def pipeline_controller():
     data = request.get_json()
 
