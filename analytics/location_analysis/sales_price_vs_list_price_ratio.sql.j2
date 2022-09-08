@@ -1,0 +1,24 @@
+{%- import 'dimensions.macro.sql.j2' as dimensions %}
+{%- import 'groupbys.macro.sql.j2' as groupbys %}
+{%- import 'filters.macro.sql.j2' as filters %}
+
+SELECT
+    {{ dimensions.date('CloseDate', level) }}
+    PERCENTILE_CONT(ClosePrice , 0.5) OVER (PARTITION BY CloseDate) AS median_close_price,
+    PERCENTILE_CONT(OriginalListPrice , 0.5) OVER (PARTITION BY CloseDate) AS median_list_price,
+    AVG(
+        SAFE_DIVIDE(
+            PERCENTILE_CONT(ClosePrice , 0.5) OVER (PARTITION BY CloseDate),
+            PERCENTILE_CONT(OriginalListPrice , 0.5) OVER (PARTITION BY CloseDate)
+        )
+    ) AS ratio
+FROM
+    MLSGrid.Property
+WHERE
+    1 = 1
+    {{ filters.mls_status_closed() }}
+    {{ filters.close_date(start, end) }}
+    {{ filters.geo(country, city) }}
+GROUP BY
+    {{ groupbys.date('CloseDate', level) }}
+

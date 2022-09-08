@@ -7,6 +7,24 @@
     {%- endif -%}
 {%- endmacro -%}
 
+{%- macro mls_status_closed -%}
+    AND MlsStatus = 'Closed'
+{%- endmacro -%}
+
+{%- macro mls_status_active -%}
+    AND MlsStatus in (
+        'Active',
+        'Coming Soon / Hold', 
+        'Under Contract - Showing',
+        'Under Contract - Not Showing',
+        'Closed'
+    )
+{%- endmacro -%}
+
+{%- macro close_date(start, end) -%}
+    AND CloseDate BETWEEN {{ start|quote }} AND {{ end|quote }}
+{%- endmacro -%}
+
 {%- macro market_date(start, end) -%}
     AND OnMarketDate <= {{ end|quote }}
     AND (OffMarketDate >= {{ start|quote }} OR ContingentDate >= {{ start|quote }})
