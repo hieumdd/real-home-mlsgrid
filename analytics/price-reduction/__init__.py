@@ -1,6 +1,6 @@
 from pathlib import PurePath
 
-from analytics.templates import query
+from analytics.template_service import query
 
 current_page_name = PurePath(__file__).parent.name
 

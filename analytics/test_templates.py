@@ -1,4 +1,4 @@
-from analytics.location_analysis import median_average_house_price
+from analytics.location import median_average_house_price
 from analytics.price_reduction import price_reduction
 
 
