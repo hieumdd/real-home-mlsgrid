@@ -11,7 +11,8 @@ httpx = "^0.22.0"
 compose = "^1.2.8"
 google-auth = "^2.6.6"
 Flask = "^2.2.2"
-PyPika = "^0.48.9"
+Jinja2 = "^3.1.2"
+Flask-Cors = "^3.0.10"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"

@@ -1,0 +1,16 @@
+{%- import 'macro/dimensions.sql.j2' as dimensions %}
+{%- import 'macro/groupbys.sql.j2' as groupbys %}
+{%- import 'macro/filters.sql.j2' as filters %}
+
+SELECT
+    {{ dimensions.date('CloseDate', level) }} AS date,
+    AVG(DATE_DIFF(CloseDate, OnMarketDate, DAY) + 1) as days_on_market,
+FROM
+    MLSGrid.Property
+WHERE
+    {{ filters.close_date(start, end) }}
+    AND {{ filters.geo(country, city) }}
+GROUP BY
+    date
+ORDER BY
+    date
