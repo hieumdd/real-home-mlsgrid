@@ -12,4 +12,5 @@ WHERE
     AND {{ filters.geo(country, city) }}
 GROUP BY
     {{ dimensions.date('CloseDate', level) }}
-
+ORDER BY
+    date

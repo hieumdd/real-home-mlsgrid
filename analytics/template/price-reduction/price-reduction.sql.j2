@@ -20,3 +20,5 @@ GROUP BY
     {%- if by -%}
     ,{{ groupbys.breakdown(by) }}
     {%- endif -%}
+ORDER BY
+    date

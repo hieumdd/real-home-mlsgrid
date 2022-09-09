@@ -13,4 +13,5 @@ WHERE
     AND {{ filters.geo(country, city) }}
 GROUP BY
     {{ groupbys.breakdown(by) }}
-
+ORDER BY
+    date

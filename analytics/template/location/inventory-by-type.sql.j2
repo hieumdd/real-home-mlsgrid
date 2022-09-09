@@ -13,3 +13,5 @@ WHERE
 GROUP BY
     {{ dimensions.date('OnMarketDate', level) }}
     ,PropertySubType
+ORDER BY
+    date
