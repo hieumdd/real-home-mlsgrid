@@ -1,10 +1,12 @@
 from flask import Flask, Request, request
+from flask_cors import CORS
 
 from mlsgrid.service import pipeline_service
 from analytics.service import analytics_service
 from analytics.template import routes as analytics_routes
 
 app = Flask(__name__)
+CORS(app)
 
 
 @app.route("/sync", methods=["POST"])
