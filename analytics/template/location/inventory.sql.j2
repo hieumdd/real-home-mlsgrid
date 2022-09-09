@@ -11,5 +11,7 @@ WHERE
     {{ filters.mls_status_active() }}
     AND {{ filters.market_date(start, end) }}
     AND {{ filters.geo(country, city) }}
+{% if by %}
 GROUP BY
     {{ groupbys.breakdown(by) }}
+{% endif %}
