@@ -17,6 +17,13 @@ routes = {
     }
     for page, templates in [
         (
+            "dimension",
+            [
+                "country",
+                "city",
+            ],
+        ),
+        (
             "location",
             [
                 "median-average-house-price",
