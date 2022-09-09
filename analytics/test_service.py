@@ -15,10 +15,8 @@ from analytics import service
         {
             "level": "week",
             "by": "bedrooms_total",
-            "country": "Country, City",
-            "city": "City",
-            "start": "2022-01-01",
-            "end": "2022-01-01",
+            "start": "2022-07-01",
+            "end": "2022-08-01",
         },
     ],
 )

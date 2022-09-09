@@ -16,34 +16,37 @@ routes = {
         path: template_env.get_template(f"{page}/{path}.sql.j2") for path in templates
     }
     for page, templates in [
-        (
-            "dimension",
-            [
-                "country",
-                "city",
-            ],
-        ),
-        (
-            "location",
-            [
-                "median-average-house-price",
-                "sales-price-vs-list-price-ratio",
-                "inventory-by-type",
-                "major-metrics",
-                "inventory",
-            ],
-        ),
+        # (
+        #     "dimension",
+        #     [
+        #         "country",
+        #         "city",
+        #     ],
+        # ),
+        # (
+        #     "location",
+        #     [
+        #         "median-average-house-price",
+        #         "sales-price-vs-list-price-ratio",
+        #         "inventory-by-type",
+        #         "major-metrics",
+        #         "inventory",
+        #     ],
+        # ),
         (
             "supply-demand",
             [
+                "absorbtion-rate",
+                "closed-sales-vs-under-contract",
+                "new-listing-vs-under-contract",
                 "days-on-market",
             ],
         ),
-        (
-            "price-reduction",
-            [
-                "price-reduction",
-            ],
-        ),
+        # (
+        #     "price-reduction",
+        #     [
+        #         "price-reduction",
+        #     ],
+        # ),
     ]
 }
