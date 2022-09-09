@@ -3,12 +3,7 @@
 
 SELECT
     date,
-    AVG(
-        SAFE_DIVIDE(
-            median_close_price,
-            median_list_price
-        )
-    ) AS ratio
+    AVG(SAFE_DIVIDE(median_close_price, median_list_price)) AS ratio
 FROM
     (
         SELECT

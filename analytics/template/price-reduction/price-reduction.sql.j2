@@ -16,9 +16,9 @@ WHERE
     AND {{ filters.market_date(start, end) }}
     AND {{ filters.geo(country, city) }}
 GROUP BY
-    {{ dimensions.date('DATE(MajorChangeTimeStamp)', level) }}
-    {%- if by -%}
+    date
+    {% if by %}
     ,{{ groupbys.breakdown(by) }}
-    {%- endif -%}
+    {% endif %}
 ORDER BY
     date

@@ -11,7 +11,7 @@ WHERE
     {{ filters.market_date(start, end) }}
     AND {{ filters.geo(country, city) }}
 GROUP BY
-    {{ dimensions.date('OnMarketDate', level) }}
-    ,PropertySubType
+    date,
+    PropertySubType
 ORDER BY
     date
