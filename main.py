@@ -7,9 +7,11 @@ from analytics.template import routes as analytics_routes
 app = Flask(__name__)
 
 
-@app.post("/sync")
+@app.route("/sync", methods=["POST"])
 def pipeline_controller():
-    data = request.get_json()
+    request_json = request.get_json(silent=True)
+
+    data = request_json if request_json else {}
 
     output_rows = pipeline_service(
         data.get("start"),
@@ -26,9 +28,12 @@ def analytics_controller(page, route):
 def main(request: Request):
     print(request)
 
+    request_json = request.get_json(silent=True)
+
     internal_ctx = app.test_request_context(
         path=request.full_path,
         method=request.method,
+        json=request_json if request_json else {},
     )
     internal_ctx.request = request
     internal_ctx.push()
