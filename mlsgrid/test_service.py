@@ -7,7 +7,7 @@ from mlsgrid import service
     ["start", "end"],
     [
         (None, None),
-        ("2022-07-01", "2022-09-02"),
+        ("2022-01-01", "2022-07-01"),
     ],
     ids=["auto", "manual"],
 )
