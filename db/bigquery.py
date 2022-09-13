@@ -21,7 +21,8 @@ def get_latest(table: str):
 def load(table: str, schema: list[dict]):
     def _load(rows: list[dict]) -> int:
         output_rows = (
-            get_client().load_table_from_json(
+            get_client()
+            .load_table_from_json(
                 rows,
                 f"{DATASET}.p_{table}",
                 job_config=bigquery.LoadJobConfig(

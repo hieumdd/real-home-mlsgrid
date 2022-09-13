@@ -15,7 +15,8 @@ client = httpx.Client(
 
 def get_property(timeframe: tuple[datetime, datetime]):
     start, end = [
-        dt.replace(tzinfo=None).isoformat(timespec="milliseconds") + 'Z' for dt in timeframe
+        dt.replace(tzinfo=None).isoformat(timespec="milliseconds") + "Z"
+        for dt in timeframe
     ]
 
     filter_ = " and ".join(
