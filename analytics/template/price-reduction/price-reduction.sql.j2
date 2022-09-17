@@ -14,7 +14,7 @@ WHERE
     MajorChangeType = 'Price Change'
     AND {{ filters.mls_status_active() }}
     AND {{ filters.market_date(start, end) }}
-    AND {{ filters.geo(country, city) }}
+    AND {{ filters.geo(county, city) }}
 GROUP BY
     date
     {% if by %}

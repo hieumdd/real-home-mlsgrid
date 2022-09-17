@@ -26,7 +26,7 @@ def analytics_service(args: dict, template: Template):
         "by": args.get("by"),
         "start": args.get("start"),
         "end": args.get("end"),
-        "country": parse_array(args.get("country")),
+        "county": parse_array(args.get("county")),
         "city": parse_array(args.get("city")),
     }
 

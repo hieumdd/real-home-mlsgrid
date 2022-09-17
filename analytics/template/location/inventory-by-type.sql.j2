@@ -3,15 +3,15 @@
 
 SELECT
     {{ dimensions.date('OnMarketDate', level) }} AS date,
-    PropertySubType AS property_sub_type,
-    COUNT(ListingId ) as count_units,
+    PropertySubTypeGroup AS property_sub_type_group,
+    COUNT(ListingId) as count_units,
 FROM
     MLSGrid.Property
 WHERE
     {{ filters.market_date(start, end) }}
-    AND {{ filters.geo(country, city) }}
+    AND {{ filters.geo(county, city) }}
 GROUP BY
     date,
-    PropertySubType
+    PropertySubTypeGroup
 ORDER BY
     date

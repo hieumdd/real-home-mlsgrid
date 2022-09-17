@@ -19,7 +19,7 @@ routes = {
         (
             "dimension",
             [
-                "country",
+                "county",
                 "city",
             ],
         ),
