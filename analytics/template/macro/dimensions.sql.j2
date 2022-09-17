@@ -13,8 +13,8 @@
     {%- if by == 'bedrooms_total' -%}
     BedroomsTotal AS bedrooms_total,
     {%- elif by == 'type' -%}
-    PropertySubType AS property_sub_type,
-    {%- elif by == 'postal_code' -%}
-    PostalCode AS postal_code,
+    PropertySubTypeGroup AS property_sub_type_group,
+    {%- elif by == 'zip_code' -%}
+    ZipCode AS zip_code,
     {%- endif %}
 {%- endmacro %}

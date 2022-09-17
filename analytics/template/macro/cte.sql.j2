@@ -11,9 +11,9 @@ master_dimension AS (
         {% if by == 'bedrooms_total' %}
         CROSS JOIN (SELECT DISTINCT BedroomsTotal FROM MLSGrid.Property)
         {% elif by == 'type' %}
-        CROSS JOIN (SELECT DISTINCT PropertySubType FROM MLSGrid.Property)
-        {% elif by == 'postal_code' %}
-        CROSS JOIN (SELECT DISTINCT PostalCode FROM MLSGrid.Property)
+        CROSS JOIN (SELECT DISTINCT PropertySubTypeGroup FROM MLSGrid.Property)
+        {% elif by == 'zip_code' %}
+        CROSS JOIN (SELECT DISTINCT ZipCode FROM MLSGrid.Property)
         {% endif %}
     ),
 {%- endmacro -%}

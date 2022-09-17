@@ -8,7 +8,7 @@ FROM
 WHERE
     MlsStatus in ('Active', 'Coming Soon / Hold')
     AND {{ filters.market_date(start, end) }}
-    AND {{ filters.geo(country, city) }}
+    AND {{ filters.geo(county, city) }}
 GROUP BY
     date
 ORDER BY

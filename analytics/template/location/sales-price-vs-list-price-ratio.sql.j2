@@ -17,7 +17,7 @@ FROM
         WHERE
             {{ filters.mls_status_closed() }}
             AND {{ filters.close_date(start, end) }}
-            AND {{ filters.geo(country, city) }}
+            AND {{ filters.geo(county, city) }}
     )
 GROUP BY
     date
