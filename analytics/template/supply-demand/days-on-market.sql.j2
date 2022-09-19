@@ -4,6 +4,7 @@
 
 SELECT
     {{ dimensions.date('CloseDate', level) }} AS date,
+    {{ dimensions.breakdown(by) }}
     AVG(DATE_DIFF(CloseDate, OnMarketDate, DAY) + 1) as days_on_market,
 FROM
     MLSGrid.Property
@@ -12,5 +13,8 @@ WHERE
     AND {{ filters.geo(county, city) }}
 GROUP BY
     date
+    {% if by %}
+    ,{{ groupbys.breakdown(by) }}
+    {% endif %}
 ORDER BY
     date
