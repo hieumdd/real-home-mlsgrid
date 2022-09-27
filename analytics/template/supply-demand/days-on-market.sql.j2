@@ -4,7 +4,9 @@
 
 SELECT
     date,
-    {{ dimensions.breakdown_cte(by) }}
+    {% if by %}
+    {{ dimensions.breakdown_cte(by) }},
+    {% endif %}
     days_on_market,
     AVG(days_on_market) OVER (
         PARTITION BY date {% if by %}, {{ dimensions.breakdown_cte(by) }} {% endif %}
