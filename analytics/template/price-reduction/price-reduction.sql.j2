@@ -4,7 +4,9 @@
 
 SELECT
     {{ dimensions.date('DATE(MajorChangeTimeStamp)', level) }} AS date,
-    {{ dimensions.breakdown(by) }}
+    {%- if by -%}
+        {{ dimensions.breakdown(by) }},
+    {%- endif -%}
     COUNT(ListingId) AS count_units,
     AVG(DATE_DIFF(DATE(MajorChangeTimeStamp), OnMarketDate, day) + 1) AS avg_time_to_discount_in_days,
     AVG(ListPrice - PreviousListPrice) AS price_reduction,

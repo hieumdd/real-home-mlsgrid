@@ -4,7 +4,9 @@
 master_dimension AS (
     SELECT
         day,
-        {{ dimensions.breakdown(by) }}
+        {%- if by -%}
+            {{ dimensions.breakdown(by) }},
+        {%- endif -%}
     FROM
         UNNEST(GENERATE_DATE_ARRAY(DATE('2012-01-01'), CURRENT_DATE(), INTERVAL 1 DAY)) AS day
 
