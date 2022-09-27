@@ -3,7 +3,9 @@
 {%- import 'macro/filters.sql.j2' as filters %}
 
 SELECT
-    {{ dimensions.breakdown(by) }}
+    {% if by %}
+    {{ dimensions.breakdown(by) }},
+    {% endif %}
     COUNT(ListingId) as count_units,
 FROM
     MLSGrid.Property

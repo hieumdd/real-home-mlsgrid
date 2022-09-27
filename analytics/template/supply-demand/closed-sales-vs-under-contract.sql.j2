@@ -8,7 +8,9 @@ WITH
     closed_sales AS (
         SELECT
             {{ dimensions.date('CloseDate', level) }} AS date,
-            {{ dimensions.breakdown(by) }}
+            {%- if by -%}
+                {{ dimensions.breakdown(by) }},
+            {%- endif -%}
             COUNT(ListingId) AS cnt,
         FROM
             MLSGrid.Property
@@ -24,7 +26,9 @@ WITH
     under_contract AS (
         SELECT
             {{ dimensions.date('COALESCE(OffMarketDate, ContingentDate)', level) }} AS date,
-            {{ dimensions.breakdown(by) }}
+            {%- if by -%}
+                {{ dimensions.breakdown(by) }},
+            {%- endif -%}
             COUNT(ListingId) AS cnt,
         FROM
             MLSGrid.Property
