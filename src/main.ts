@@ -15,7 +15,7 @@ async function bootstrap() {
     app.setGlobalPrefix('api');
 
     const config = new DocumentBuilder()
-        .setTitle('Vuanem BI Portal')
+        .setTitle('Real Home Data')
         .addBearerAuth()
         .build();
     const document = SwaggerModule.createDocument(app, config);
