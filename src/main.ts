@@ -3,6 +3,7 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as cookieParser from 'cookie-parser';
 
 import { AppModule } from './app.module';
+import { CloudLoggingLogger } from './logging/logging.service';
 
 const bootstrap = async () => {
     const app = await NestFactory.create(AppModule, {
@@ -10,6 +11,7 @@ const bootstrap = async () => {
             origin: true,
             credentials: true,
         },
+        logger: new CloudLoggingLogger(),
     });
     app.use(cookieParser());
     app.setGlobalPrefix('api');
