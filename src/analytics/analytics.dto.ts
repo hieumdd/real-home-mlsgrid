@@ -1,5 +1,9 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
+const LevelEnum = ['day', 'week', 'month'];
+
+const ByEnum = ['bedrooms', 'type', 'zip_code'];
+
 export class QueryBaseDto {
     @ApiProperty()
     start: string;
@@ -15,12 +19,12 @@ export class QueryBaseDto {
 }
 
 export class QueryLevelDto extends QueryBaseDto {
-    @ApiProperty()
+    @ApiProperty({ enum: LevelEnum })
     level: string;
 }
 
 export class QueryByDto extends QueryBaseDto {
-    @ApiProperty()
+    @ApiProperty({ enum: ByEnum })
     by: string;
 }
 
@@ -28,10 +32,10 @@ export class QueryLevelByDto
     extends QueryBaseDto
     implements QueryLevelDto, QueryByDto
 {
-    @ApiProperty()
+    @ApiProperty({ enum: LevelEnum })
     level: string;
 
-    @ApiProperty()
+    @ApiProperty({ enum: ByEnum })
     by: string;
 }
 

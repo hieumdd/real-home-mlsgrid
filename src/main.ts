@@ -4,7 +4,7 @@ import * as cookieParser from 'cookie-parser';
 
 import { AppModule } from './app.module';
 
-async function bootstrap() {
+const bootstrap = async () => {
     const app = await NestFactory.create(AppModule, {
         cors: {
             origin: true,
@@ -22,5 +22,6 @@ async function bootstrap() {
     SwaggerModule.setup('api', app, document);
 
     await app.listen(5000);
-}
+};
+
 bootstrap();
