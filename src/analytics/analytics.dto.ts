@@ -34,3 +34,10 @@ export class QueryLevelByDto
     @ApiProperty()
     by: string;
 }
+
+export type QueryOptions =
+    | QueryBaseDto
+    | QueryLevelDto
+    | QueryByDto
+    | QueryLevelByDto
+    | {};

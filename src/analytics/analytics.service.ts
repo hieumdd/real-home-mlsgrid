@@ -4,7 +4,7 @@ import { BigQueryDate } from '@google-cloud/bigquery';
 import { chain } from 'lodash';
 
 import { BigQueryProvider } from '../google-cloud/bigquery.service';
-import { QueryLevelDto, QueryByDto, QueryLevelByDto } from './analytics.dto';
+import { QueryOptions } from './analytics.dto';
 
 @Injectable()
 export class AnalyticsService {
@@ -20,10 +20,7 @@ export class AnalyticsService {
         return this.env.render(path, options);
     }
 
-    async query(
-        path: string,
-        options: QueryLevelDto | QueryByDto | QueryLevelByDto | {} = {},
-    ) {
+    async query(path: string, options: QueryOptions = {}) {
         const sql = this.render(`${path}.sql.j2`, options);
         return this.bigqueryProvider
             .query<any>(sql)
