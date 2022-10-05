@@ -1,9 +1,5 @@
-import { Feature } from './user.entity';
-
-export class CreateUserDto {
-    id?: number;
-
+export class AuthDto {
     email: string;
 
-    features: Feature[];
+    password: string;
 }
