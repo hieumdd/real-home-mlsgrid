@@ -1,13 +1,16 @@
-import { Controller, Get, Query } from '@nestjs/common';
-import { ApiTags, ApiExtraModels } from '@nestjs/swagger';
+import { Controller, Get, Query, UseGuards } from '@nestjs/common';
+import { ApiTags, ApiBearerAuth, ApiExtraModels } from '@nestjs/swagger';
 
+import { JwtGuard } from '../auth/jwt.guard';
 import { AnalyticsService } from './analytics.service';
 import { QueryGeneric, QueryLevel, QueryBy } from './analytics.dto';
 
 const route = 'location';
 
 @ApiTags('Analytics / Location')
+@ApiBearerAuth()
 @ApiExtraModels(QueryGeneric, QueryLevel, QueryBy)
+@UseGuards(JwtGuard)
 @Controller(route)
 export class LocationController {
     constructor(private readonly analyticsService: AnalyticsService) {}

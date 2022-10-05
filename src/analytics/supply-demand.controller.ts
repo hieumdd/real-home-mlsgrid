@@ -1,13 +1,16 @@
-import { Controller, Get, Query } from '@nestjs/common';
-import { ApiTags, ApiExtraModels } from '@nestjs/swagger';
+import { Controller, Get, Query, UseGuards } from '@nestjs/common';
+import { ApiTags, ApiBearerAuth, ApiExtraModels } from '@nestjs/swagger';
 
+import { JwtGuard } from '../auth/jwt.guard';
 import { AnalyticsService } from './analytics.service';
 import { QueryLevelBy } from './analytics.dto';
 
 const route = 'demand-planning';
 
 @ApiTags('Analytics / Supply Demand')
+@ApiBearerAuth()
 @ApiExtraModels(QueryLevelBy)
+@UseGuards(JwtGuard)
 @Controller(route)
 export class SupplyDemandController {
     constructor(private readonly analyticsService: AnalyticsService) {}
