@@ -1,47 +1,38 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+enum Level {
+    'day',
+    'week',
+    'month',
+}
 
-const LevelEnum = ['day', 'week', 'month'];
+enum By {
+    'bedrooms',
+    'type',
+    'zip_code',
+}
 
-const ByEnum = ['bedrooms', 'type', 'zip_code'];
-
-export class QueryBaseDto {
-    @ApiProperty()
+export class QueryGeneric {
     start: string;
-
-    @ApiProperty()
     end: string;
-
-    @ApiPropertyOptional()
     county?: string;
-
-    @ApiPropertyOptional()
     city?: string;
 }
 
-export class QueryLevelDto extends QueryBaseDto {
-    @ApiProperty({ enum: LevelEnum })
-    level: string;
+export class QueryLevel extends QueryGeneric {
+    level: Level;
 }
 
-export class QueryByDto extends QueryBaseDto {
-    @ApiProperty({ enum: ByEnum })
-    by: string;
+export class QueryBy extends QueryGeneric {
+    by: By;
 }
 
-export class QueryLevelByDto
-    extends QueryBaseDto
-    implements QueryLevelDto, QueryByDto
-{
-    @ApiProperty({ enum: LevelEnum })
-    level: string;
-
-    @ApiProperty({ enum: ByEnum })
-    by: string;
+export class QueryLevelBy extends QueryGeneric implements QueryLevel, QueryBy {
+    level: Level;
+    by: By;
 }
 
 export type QueryOptions =
-    | QueryBaseDto
-    | QueryLevelDto
-    | QueryByDto
-    | QueryLevelByDto
+    | QueryGeneric
+    | QueryLevel
+    | QueryBy
+    | QueryLevelBy
     | {};

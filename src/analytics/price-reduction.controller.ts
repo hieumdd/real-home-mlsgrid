@@ -1,18 +1,19 @@
 import { Controller, Get, Query } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiTags, ApiExtraModels } from '@nestjs/swagger';
 
 import { AnalyticsService } from './analytics.service';
-import { QueryLevelByDto } from './analytics.dto';
+import { QueryLevelBy } from './analytics.dto';
 
 const route = 'price-reduction';
 
 @ApiTags('Analytics / Price Reduction')
-@Controller(`/${route}`)
+@ApiExtraModels(QueryLevelBy)
+@Controller(route)
 export class PriceReductionController {
     constructor(private readonly analyticsService: AnalyticsService) {}
 
     @Get('price-reduction')
-    async priceReductionPriceReduction(@Query() options: QueryLevelByDto) {
+    async priceReductionPriceReduction(@Query() options: QueryLevelBy) {
         return this.analyticsService.query(`${route}/price-reduction`, options);
     }
 }

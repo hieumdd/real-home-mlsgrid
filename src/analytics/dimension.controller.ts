@@ -6,7 +6,7 @@ import { AnalyticsService } from './analytics.service';
 const route = 'dimension';
 
 @ApiTags('Analytics / Dimension')
-@Controller(`/${route}`)
+@Controller(route)
 export class DimensionController {
     constructor(private readonly analyticsService: AnalyticsService) {}
 
