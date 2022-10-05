@@ -11,18 +11,16 @@ export class AnalyticsService {
     private env: nunjucks.Environment;
 
     constructor(private bigqueryProvider: BigQueryProvider) {
-        const templatePath = `${__dirname}/template`.replace('dist', 'src');
-        const loader = new nunjucks.FileSystemLoader(templatePath);
+        const loader = new nunjucks.FileSystemLoader(`${__dirname}/template`);
         this.env = new nunjucks.Environment(loader, { autoescape: false });
         this.env.addFilter('quote', (value) => `'${value}'`);
     }
 
-    render(path: string, options: any) {
+    render(path: string, options: QueryOptions) {
         return this.env.render(`${path}.sql.j2`, options);
     }
 
     async query(path: string, options: QueryOptions = {}) {
-        console.log(path);
         const sql = this.render(path, options);
         return this.bigqueryProvider
             .query<any>(sql)
